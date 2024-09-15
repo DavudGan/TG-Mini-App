@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, KeyboardEvent } from 'react';
 import { Container, TextField, Button, List, ListItem, Typography, Box } from '@mui/material';
 
 const WebSocketScreen = () => {
@@ -15,7 +15,7 @@ const WebSocketScreen = () => {
       setMessages((prev) => [...prev, `Получил: ${event.data}`]);
     };
 
-    // Сохраняем сокет в состоянии
+    // Сохраняем сокет
     setSocket(ws);
 
     // Закрываем соединение при размонтировании компонента
@@ -34,13 +34,19 @@ const WebSocketScreen = () => {
     }
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); 
+      sendMessage();
+    }
+  };
+
   return (
-    <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', height: '90vh' }}>
       <Typography variant="h4" gutterBottom>
         WebSocket Echo Server
       </Typography>
 
-      {/* Контейнер для сообщений*/}
       <Box sx={{ flexGrow: 1, overflowY: 'auto', mb: 2 }}>
         <List>
           {messages.map((msg, index) => (
@@ -51,17 +57,17 @@ const WebSocketScreen = () => {
         </List>
       </Box>
 
-      {/* Контейнер для инпута и кнопки */}
-      <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexDirection: 'center' }}>
         <TextField
           label="Сообщение:"
           variant="outlined"
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown} 
         />
         <Button variant="contained" color="primary" onClick={sendMessage}>
-            Отправить
+          Отправить
         </Button>
       </Box>
     </Container>

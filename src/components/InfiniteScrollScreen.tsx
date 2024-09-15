@@ -52,7 +52,7 @@ const InfiniteScrollScreen = () => {
         sx={{
           display: "flex",
           gap: 1,
-          mb: 2,
+          mb: 0,
           flexDirection: "center",
           justifyContent: "center",
         }}

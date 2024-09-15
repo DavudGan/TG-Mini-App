@@ -56,7 +56,7 @@ const ApiScreen = () => {
             </FormControl>
           </Box>
           <Typography variant="h3">
-            USD to {selectData}: {rate}
+            USD to {selectData}: {rate||data.rates.RUB}
           </Typography>
         </Box>
       ) : (
